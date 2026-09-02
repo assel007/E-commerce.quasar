@@ -9,7 +9,6 @@
           </q-item-section>
           <q-item-section>
             <q-item-label>{{ item.name }}</q-item-label>
-            <q-item-label caption>{{ item.description }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             <div class="text-h6">${{ item.price }}</div>

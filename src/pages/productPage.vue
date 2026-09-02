@@ -1,8 +1,8 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-pa-sm">
     <div class="title">Products</div>
 
-    <div class="row q-col-gutter-xl">
+    <div id="product-grid">
       <div
         v-for="product in productStore.featuredProducts"
         :key="product.id"
@@ -22,20 +22,26 @@
         </q-card>
       </div>
     </div>
+    <q-btn class="cart-button" label="View Cart" @click="viewCart" />
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useProductStore } from '../stores/product-store';
 
 const productStore = useProductStore();
 const cartStore = useCartStore();
+const router = useRouter();
+
+const viewCart = () => {
+  void router.push('/cart');
+};
 
 const addProductToCart = (product: (typeof productStore.products)[number]) => {
   cartStore.addToCart({
     ...product,
-    description: `${product.name} - premium quality`,
     image: product.image,
   });
 };
@@ -55,6 +61,7 @@ const addProductToCart = (product: (typeof productStore.products)[number]) => {
   font-size: 22px;
   border: 1px solid #9f94b3;
   text-align: center;
+  width: 500px;
 }
 .card-button {
   background-color: #17152b;
@@ -72,5 +79,25 @@ const addProductToCart = (product: (typeof productStore.products)[number]) => {
 }
 .card-name {
   font-size: 30px;
+}
+#product-grid {
+  display: flex;
+  flex-wrap: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+.cart-button {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 30px;
+  background-color: #17152b;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: 1px solid #9f94b3;
+  height: 80px;
+  width: 250px;
 }
 </style>
