@@ -11,7 +11,7 @@
         <q-card flat bordered class="card">
           <q-img class="card-image" :src="product.image" :alt="product.name" x />
 
-          <q-card-section>
+          <q-card-section class="card-name">
             <div class="card-name">{{ product.name }}</div>
             <div class="card-price">$ {{ product.price }}</div>
           </q-card-section>
@@ -63,9 +63,14 @@ const addProductToCart = (product: (typeof productStore.products)[number]) => {
   text-transform: uppercase;
   border-radius: 8px;
   border: 1px solid #9f94b3;
+  height: 60px;
+  width: 200px;
 }
-card-image {
+.card-image {
   border-radius: 8px;
   object-position: center;
+}
+.card-name {
+  font-size: 30px;
 }
 </style>
