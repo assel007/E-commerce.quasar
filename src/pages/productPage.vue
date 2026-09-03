@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-sm">
-    <div class="title">Products</div>
+    <div class="title">{{ $t('products') }}</div>
 
     <div id="product-grid">
       <div
@@ -9,7 +9,7 @@
         class="col-12 col-sm-6 col-md-4"
       >
         <q-card flat bordered class="card">
-          <q-img class="card-image" :src="product.image" :alt="product.name" x />
+          <q-img class="card-image" :src="product.image" :alt="product.name" />
 
           <q-card-section class="card-name">
             <div class="card-name">{{ product.name }}</div>
@@ -17,12 +17,16 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn class="card-button" label="Add to cart" @click="addProductToCart(product)" />
+            <q-btn
+              class="card-button"
+              :label="t('add_to_cart')"
+              @click="addProductToCart(product)"
+            />
           </q-card-actions>
         </q-card>
       </div>
     </div>
-    <q-btn class="cart-button" label="View Cart" @click="viewCart" />
+    <q-btn class="cart-button" :label="t('view_cart')" @click="viewCart" />
   </q-page>
 </template>
 
@@ -30,10 +34,12 @@
 import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useProductStore } from '../stores/product-store';
+import { useI18n } from 'vue-i18n';
 
 const productStore = useProductStore();
 const cartStore = useCartStore();
 const router = useRouter();
+const { t } = useI18n();
 
 const viewCart = () => {
   void router.push('/cart');

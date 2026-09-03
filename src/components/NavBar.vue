@@ -1,16 +1,31 @@
 <template>
   <q-header class="my-header">
     <q-toolbar class="toolbar">
-      <q-toolbar-title class="t-title">dragon store</q-toolbar-title>
+      <q-toolbar-title class="t-title">{{ $t('title') }}</q-toolbar-title>
 
       <q-space />
 
-      <q-btn flat class="buttons" to="/" label="Home" />
-      <q-btn flat class="buttons" to="/products" label="Products" />
-      <q-btn flat class="buttons" to="/cart" label="Cart" />
+      <q-btn flat class="buttons" to="/" :label="t('home')" />
+      <q-btn flat class="buttons" to="/products" :label="t('products')" />
+      <q-btn flat class="buttons" to="/cart" :label="t('cart')" />
+      <q-btn
+        flat
+        class="buttons"
+        @click="ChangeLangrage"
+        :label="locale === 'en-US' ? 'عربيه' : 'ENGLISH'"
+      />
     </q-toolbar>
   </q-header>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+const { locale } = useI18n();
+const ChangeLangrage = () => {
+  locale.value = locale.value === 'en-US' ? 'ar' : 'en-US';
+};
+const { t } = useI18n();
+</script>
 
 <style>
 .t-title {

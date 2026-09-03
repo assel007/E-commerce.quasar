@@ -2,12 +2,14 @@
   <q-page class="q-pa-xl">
     <div class="row justify-center">
       <div class="col-12 col-md-8 text-center">
-        <div class="title">Dragon Store</div>
-        <p class="description">find the perfect choes for your evryday style!</p>
+        <div class="title">
+          {{ $t('title') }}
+        </div>
+        <p class="description">{{ $t('welcome') }}</p>
 
         <div class="q-gutter-xl q-mt-md">
-          <q-btn class="buttons" to="/products" label="Browse Products" />
-          <q-btn class="buttons" to="/cart" label="View Cart" />
+          <q-btn class="buttons" to="/products" :label="t('products')" />
+          <q-btn class="buttons" to="/cart" :label="t('cart')" />
         </div>
       </div>
     </div>
@@ -15,7 +17,8 @@
 </template>
 
 <script setup lang="ts">
-//
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 <style scoped>
 .title {

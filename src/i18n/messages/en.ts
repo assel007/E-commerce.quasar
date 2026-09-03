@@ -1,0 +1,15 @@
+export default {
+  welcome: 'find the perfect choice for your everyday style!',
+  title: 'Dragon Store',
+  home: 'Home',
+  products: 'Products',
+  cart: 'Cart',
+  praowse: 'Browse Products',
+  view_cart: 'View Cart',
+  Nike_Air_Max: 'Nike Air Max',
+  Adidas_Casual: 'Adidas Casual',
+  Nike_Sport: 'Nike Sport',
+  cart_empty: 'Cart is empty',
+  total: 'Total',
+  add_to_cart: 'Add to Cart',
+};
