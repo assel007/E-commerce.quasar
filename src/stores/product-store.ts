@@ -1,29 +1,27 @@
-import { defineStore } from 'pinia'; //import function from pinia to define a store
+import { defineStore } from 'pinia';
+import axios from 'axios';
+import type { Product } from '../model/ProductModel';
+
 export const useProductStore = defineStore('product', {
   state: () => ({
-    products: [
-      {
-        id: 1,
-        name: 'Nike_Air_Max',
-        price: 120,
-        image: '/product1.jpg',
-      },
-      {
-        id: 2,
-        name: 'Adidas_Casual',
-        price: 95,
-        image: '/product2.jpg',
-      },
-      {
-        id: 3,
-        name: 'Nike_Sport',
-        price: 150,
-        image: '/product3.jpg',
-      },
-    ],
+    products: [] as Product[],
+    loading: false,
+    error: null as string | null,
   }),
 
-  getters: {
-    featuredProducts: (state) => state.products.slice(0, 3),
+  actions: {
+    async fetchProducts() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.get<Product[]>('https://api.escuelajs.co/api/v1/products');
+        this.products = response.data;
+      } catch (err) {
+        this.error = 'حدث خطأ أثناء جلب المنتجات';
+        console.error(err);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });

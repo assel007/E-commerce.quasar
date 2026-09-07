@@ -1,18 +1,27 @@
 <template>
   <q-page class="q-pa-sm">
     <div class="title">{{ $t('products') }}</div>
-
-    <div id="product-grid">
+    <div v-if="productStore.loading" class="text-center q-pa-xl">
+      <q-spinner-dots color="primary" size="60px" />
+    </div>
+    <div v-else id="product-grid">
       <div
-        v-for="product in productStore.featuredProducts"
+        v-for="product in productStore.products"
         :key="product.id"
         class="col-12 col-sm-6 col-md-4"
       >
         <q-card flat bordered class="card">
-          <q-img class="card-image" :src="product.image" :alt="product.name" />
-
+          <q-img
+            class="card-image"
+            :src="
+              product.images && product.images.length > 0
+                ? product.images[0]
+                : 'https://via.placeholder.com/300'
+            "
+            :alt="product.title"
+          />
           <q-card-section class="card-name">
-            <div class="card-name">{{ product.name }}</div>
+            <div class="card-name">{{ product.title }}</div>
             <div class="card-price">$ {{ product.price }}</div>
           </q-card-section>
 
@@ -26,13 +35,15 @@
         </q-card>
       </div>
     </div>
+
     <q-btn class="cart-button" :label="t('view_cart')" @click="viewCart" />
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCartStore } from '../stores/cart';
+import { useCartStore } from '../stores/cart-store';
 import { useProductStore } from '../stores/product-store';
 import { useI18n } from 'vue-i18n';
 
@@ -41,6 +52,10 @@ const cartStore = useCartStore();
 const router = useRouter();
 const { t } = useI18n();
 
+onMounted(() => {
+  void productStore.fetchProducts();
+});
+
 const viewCart = () => {
   void router.push('/cart');
 };
@@ -48,10 +63,12 @@ const viewCart = () => {
 const addProductToCart = (product: (typeof productStore.products)[number]) => {
   cartStore.addToCart({
     ...product,
-    image: product.image,
+    title: product.title,
+    images: product.images,
   });
 };
 </script>
+
 <style scoped>
 .title {
   font-size: 80px;
@@ -82,13 +99,14 @@ const addProductToCart = (product: (typeof productStore.products)[number]) => {
 .card-image {
   border-radius: 8px;
   object-position: center;
+  height: 300px; /* تم إضافة ارتفاع ثابت لترتيب الصور */
 }
 .card-name {
   font-size: 30px;
 }
 #product-grid {
   display: flex;
-  flex-wrap: space-between;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 50px;

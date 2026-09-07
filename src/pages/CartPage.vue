@@ -6,10 +6,10 @@
       <q-list v-if="cartStore.cartItems.length">
         <q-item class="item" v-for="item in cartStore.cartItems" :key="item.id">
           <q-item-section avatar class="images">
-            <q-img :src="item.image" style="width: 100px" />
+            <q-img :src="item.images[0]" style="width: 100px" />
           </q-item-section>
           <q-item-section class="name">
-            <q-item-label>{{ item.name }}</q-item-label>
+            <q-item-label>{{ item.title }}</q-item-label>
           </q-item-section>
           <q-item-section>
             <div class="text-h6">${{ item.price }}</div>
@@ -25,7 +25,7 @@
   </q-page>
 </template>
 <script setup lang="ts">
-import { useCartStore } from '../stores/cart';
+import { useCartStore } from '../stores/cart-store';
 const cartStore = useCartStore();
 </script>
 <style scoped>
